@@ -31,13 +31,17 @@ a, h3 {
 .container {
     position: relative;
     height: 100vh;
-    background-image: url('/img/fondo2.jpg');
+    background-image: url('../img/fondo2.jpg');
     background-size: cover;
     background-position: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.tableResult{
+    background-color: #fff;
 }
 
 .header {

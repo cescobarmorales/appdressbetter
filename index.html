@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Página de inicio personalizada con buscador y menú de navegación">
     <title>App Dress Better</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="css/styles.css">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -18,36 +20,20 @@
           }
         }
       </script>
-    
-      <script type="module" src="/js/avatar.js"></script>
+
+    <script type="module" src="js/avatar.js"></script>
 
 </head>
+
 <body>
     <div class="container">
         <header class="header">
             <div class="logo" aria-label="Logo Corporativo">
-                <img src="/img/logoApp.png" alt="Logo Corporativo" width="30" height="30">
+                <img src="img/logoApp.png" alt="Logo Corporativo" width="30" height="30">
             </div>
             
         </header>
-
-
-            <div  class="search-bar" role="search">
-                <input type="text" id="searchInput" class="form-control mt-3" placeholder="Busca tú prenda personalizada con IA">
-                <div class="mt-3">
-                    <button id="searchButton" class="btn btn-primary">🔍</button>
-                </div>
-                <div id="responseContainer" class="mt-5 text-white"></div>
-            </div>
-
-            <div class="content">
-                <section id="home">
-                <div id='avatar-container'>
-                    <div id='avatar-loading'></div>
-                </div>
-                </section>
-            </div>
-
+        
         <nav class="nav-menu" aria-label="Menú principal">
             <button id="searchButton" class="menu-toggle" aria-expanded="false" aria-controls="menu-list">
                 <span class="sr-only">Abrir menú</span>
@@ -58,46 +44,67 @@
                 <li><a href="#partners">Partners</a></li>
             </ul>
         </nav>
+        <!-- <div id="responseContainer" class="mt-3 text-white"></div> -->
+        
+        <div class="content">
+            
+            <section id="home">
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <button class="btn btn-secondary" onclick="obtenerRecomendacionesVestimenta('formal')">Formal</button>
+                    <button class="btn btn-secondary" onclick="obtenerRecomendacionesVestimenta('deportivo')">Deportivo</button>
+                    <button class="btn btn-secondary" onclick="obtenerRecomendacionesVestimenta('urbano')">Urbano</button>
+                    <button class="btn btn-secondary" onclick="obtenerRecomendacionesVestimenta('fiestas')">Fiestas</button>
+                    <button class="btn btn-secondary" onclick="obtenerRecomendacionesVestimenta('montaña')">Montaña</button>
+                    <button class="btn btn-secondary" onclick="obtenerRecomendacionesVestimenta('playa')">Playa</button>
+                </div>
+                <div id='avatar-container'>
+                    <div id='avatar-loading'></div>                    
+                </div>
+               
+
+            </section>
+            <div id="response-container">
+                <table id="tblresultado" class="tableResult">
+                    <thead>
+                      <tr>
+                        <th>Item</th>
+                        <th>Description</th>
+                        <th>Color</th>
+                        <th>Size</th>
+                        <th>Price</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tabla-recomendaciones">
+                      <!-- Aquí se insertarán las filas de recomendaciones -->
+                    </tbody>
+                  </table>
+
+            </div>
+        </div>
+
     </div>
 
-    <h2 class="partners-title" id="partners">Nuestros Partners</h2>
     <!-- Sección de Partners -->
+    <h2 class="partners-title" id="partners">Nuestros Partners</h2>
     <div class="partners-container">
         <div class="partner">
-            <img src="/img/falabella.png" alt="Logo de Noticias">
+            <img src="img/falabella.png" alt="Logo de Noticias">
         </div>
         <div class="partner">
-            <img src="/img/paris.png" alt="Logo de Correo">
+            <img src="img/paris.png" alt="Logo de Correo">
         </div>
         <div class="partner">
-            <img src="/img/ripley.png" alt="Logo de Tienda">
+            <img src="img/ripley.png" alt="Logo de Tienda">
         </div>
         <div class="partner">
-            <img src="/img/hm.png" alt="Logo de Asistente AI">
+            <img src="img/hm.png" alt="Logo de Asistente AI">
         </div>
     </div>
-
-    <!-- <div class="featurette">
-        <div class="featurette-content">
-            <h2>First featurette heading. <span>It'll blow your mind.</span></h2>
-            <p>Some great placeholder content for the first featurette here. Imagine some exciting prose here.</p>
-        </div>
-        <div class="featurette-image">
-            <img src="/img/muestra.jpg" alt="Placeholder image">
-        </div>
-    </div> -->
-
-    <!-- <div class="featurette">
-        <div class="featurette-content">
-            <h2>Oh yeah, it's that good. <span>See for yourself.</span></h2>
-            <p>Another featurette? Of course. More placeholder content here to give you an idea of how this layout would work with some actual real-world content in place.</p>
-        </div>
-        <div class="featurette-image">
-            <img src="/img/muestra2.jpg" alt="Placeholder image">
-        </div>
-    </div> -->
-
-    <script src="/js/script.js" defer></script>
-    <script src="/js/chatbot.js"></script>
+   
+    <!-- Script personalizado -->
+    <script src="js/script.js" defer></script>
+    <script src="js/apiClient.js"></script>
+    <script src="js/chatbot.js"></script>
 </body>
+
 </html>

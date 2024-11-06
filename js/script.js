@@ -17,17 +17,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Manejar el envío del formulario de búsqueda
-    const searchForm = document.querySelector('.search-bar');
-    searchForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const searchInput = document.getElementById('search-input');
-        const searchTerm = searchInput.value.trim();
-        if (searchTerm) {
-            // Aquí puedes implementar la lógica de búsqueda o redirigir a una página de resultados
-            console.log(`Búsqueda realizada: ${searchTerm}`);
-            searchInput.value = '';
-        }
-    });
+    // const searchForm = document.querySelector('.search-bar');
+    // searchForm.addEventListener('submit', (event) => {
+    //     event.preventDefault();
+    //     const searchInput = document.getElementById('search-input');
+    //     const searchTerm = searchInput.value.trim();
+    //     if (searchTerm) {
+    //         // Aquí puedes implementar la lógica de búsqueda o redirigir a una página de resultados
+    //         console.log(`Búsqueda realizada: ${searchTerm}`);
+    //         searchInput.value = '';
+    //     }
+    // });
 
     // Lazy loading para la imagen de fondo
     const lazyLoadBackground = () => {
@@ -39,5 +39,11 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     };
 
+
+
+
+    
     lazyLoadBackground();
+
+
 });
