@@ -44,7 +44,7 @@ async function obtenerPerfil(email) {
     } else {
       console.error('Error al obtener el perfil:', response.statusText);
     }
-  }
+}
 
 
 async function enviarPregunta() {

@@ -6,21 +6,25 @@ window.onload = () => loadModel();
 
 function loadModel() {
   const loader = new GLTFLoader();
-  loader.load('avatar.glb',
+  loader.load(
+    'avatar.glb',
     (gltf) => {
       setupScene(gltf);
-      document.getElementById('avatar-loading').style.display = 'none';
-    }, 
+      const loadingElement = document.getElementById('avatar-loading');
+      if (loadingElement) {
+        loadingElement.remove();  // Elimina el elemento de carga completamente
+      }
+    },
     (xhr) => {
       const percentCompletion = Math.round((xhr.loaded / xhr.total) * 100);
-    //   document.getElementById('avatar-loading').innerText = `AVATAR... ${percentCompletion}%`
       console.log(`Loading model... ${percentCompletion}%`);
-    }, 
+    },
     (error) => {
       console.log(error);
     }
   );
 }
+
 
 function setupScene(gltf) {
     const renderer = new THREE.WebGLRenderer({ 
