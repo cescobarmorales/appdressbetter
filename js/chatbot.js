@@ -121,6 +121,9 @@ async function obtenerRecomendacionesVestimenta(estilo) {
         Estilo solicitado: ${estilo}.
         Proporciona las recomendaciones en el siguiente formato JSON:
     `;
+    // Mostrar spinner y ocultar tabla
+    document.getElementById('spinner-container').style.display = 'block';
+    document.getElementById('response-container').style.display = 'none';
 
     try {
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -193,11 +196,17 @@ async function obtenerRecomendacionesVestimenta(estilo) {
 
             // Llama a renderizarTablaRecomendaciones con las recomendaciones
             renderizarTablaRecomendaciones(recomendaciones.content);
+            // Ocultar spinner y mostrar tabla
+            document.getElementById('spinner-container').style.display = 'none';
+            document.getElementById('response-container').style.display = 'block';
+
         } else {
             console.error("Error en la respuesta de OpenAI");
         }
     } catch (error) {
-        console.error("Error al obtener las recomendaciones:", error);
+        // Ocultar spinner incluso en caso de error
+        document.getElementById('spinner-container').style.display = 'none';
+        alert('Hubo un error al cargar los datos.');
     }
 }
 

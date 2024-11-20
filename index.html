@@ -8,6 +8,7 @@
     <title>App Dress Better</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/categorias.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,11 +33,15 @@
                 <div class="logo" aria-label="Logo Corporativo">
                     <img src="img/logoApp.png" alt="Logo Corporativo" width="40" height="40">
                 </div>
-                <nav class="nav-menu" aria-label="Menú principal" style="display: none;">
-                    <button id="searchButton" class="menu-toggle" aria-expanded="false" aria-controls="menu-list">
+                <nav class="nav-menu" aria-label="Menú principal">
+                    <button id="searchButton" class="menu-toggle" aria-expanded="false" aria-controls="menu-list" style="display: none;">
                         <i class="fas fa-bars"></i>
                     </button>
                     
+                    <!-- Profile icon with tooltip -->
+                    <a href="user.html" id="profileButton" class="profile-icon" aria-label="Configuración del perfil">
+                        <i class="fas fa-user-circle"></i>
+                    </a>
                 </nav>
             </div>
         </header>
@@ -55,10 +60,20 @@
                     <div id="avatar-container">
                         <div id="avatar-loading"></div>
                     </div>
+                    
                 </section>
 
                 <section class="table-section">
-                    <div id="response-container">
+                    <div id="spinner-container" style="display: none; text-align: center; margin: 20px 0;">
+                        <div class="spinner">
+                            <div class="bounce1"></div>
+                            <div class="bounce2"></div>
+                            <div class="bounce3"></div>
+                        </div>
+                        <p style="color: white;">Cargando datos...</p>
+                    </div>
+                    
+                    <div id="response-container" style="display: none;">
                         <table id="tblresultado" class="tableResult">
                             <thead>
                                 <tr>
@@ -75,6 +90,7 @@
                         </table>
                     </div>
                 </section>
+                
             </div>
         </main>
 

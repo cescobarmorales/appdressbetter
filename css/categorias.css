@@ -192,11 +192,121 @@
 .tableResult tbody tr:nth-child(even) {
     background: rgba(255, 255, 255, 0.05);
 }
+.tableResult tbody tr {
+    background: rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+}
 
 .tableResult tbody tr:hover {
-    background: rgba(34, 193, 195, 0.1);
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
-    transform: scale(1.02);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.tableResult td {
+    padding: 1rem 1.5rem;
+    border: none;
+    color: #f8f8f8;
+}
+
+/* Estilos para las filas de categoría */
+.tableResult tbody tr:first-child,
+.tableResult tbody tr:nth-child(5),
+.tableResult tbody tr:nth-child(9)
+ {
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 100%);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.tableResult tbody tr:first-child td,
+.tableResult tbody tr:nth-child(5) td,
+.tableResult tbody tr:nth-child(9) td{
+    padding: 1.2rem 1.5rem;
+    color: #ffffff;
+    font-size: 1.1rem;
+}
+
+/* Estilos para columnas específicas */
+.tableResult td:nth-child(1) { /* Item */
+    font-weight: 500;
+}
+
+.tableResult td:nth-child(3), /* Color */
+.tableResult td:nth-child(4) { /* Talla */
+    text-align: center;
+}
+
+.tableResult td:nth-child(5) { /* Precio */
+    font-weight: 700;
+    color: #4CAF50;
+    text-align: right;
+}
+
+/* Animación de entrada para las filas */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tableResult tbody tr {
+    animation: fadeIn 0.3s ease-out forwards;
+    opacity: 0;
+}
+
+.tableResult tbody tr:nth-child(1) { animation-delay: 0.1s; }
+.tableResult tbody tr:nth-child(2) { animation-delay: 0.2s; }
+.tableResult tbody tr:nth-child(3) { animation-delay: 0.3s; }
+.tableResult tbody tr:nth-child(4) { animation-delay: 0.4s; }
+.tableResult tbody tr:nth-child(5) { animation-delay: 0.5s; }
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .tableResult thead {
+        display: none;
+    }
+
+    .tableResult tbody tr {
+        display: block;
+        margin-bottom: 1rem;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .tableResult td {
+        display: block;
+        text-align: right;
+        padding: 0.5rem 1rem;
+        position: relative;
+    }
+
+    .tableResult td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 1rem;
+        width: 45%;
+        text-align: left;
+        font-weight: 600;
+    }
+
+    .tableResult tbody tr:first-child,
+    .tableResult tbody tr:nth-child(5) {
+        background: linear-gradient(90deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.4) 100%);
+        padding: 0.5rem;
+        border-radius: 8px;
+    }
+
+    .tableResult tbody tr:first-child td,
+    .tableResult tbody tr:nth-child(5) td {
+        text-align: center;
+        padding: 0.5rem;
+    }
 }
 
 .tableResult td {
@@ -395,10 +505,10 @@
 .spinner > div {
     width: 18px;
     height: 18px;
-    background-color: #fff;
+    background-color: #333;
     border-radius: 100%;
     display: inline-block;
-    animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+    animation: bouncedelay 1.4s infinite ease-in-out both;
 }
 
 .spinner .bounce1 {
@@ -409,12 +519,16 @@
     animation-delay: -0.16s;
 }
 
-@keyframes sk-bouncedelay {
+.spinner .bounce3 {
+    animation-delay: 0s;
+}
+
+@keyframes bouncedelay {
     0%, 80%, 100% {
         transform: scale(0);
     }
     40% {
-        transform: scale(1.0);
+        transform: scale(1);
     }
 }
 

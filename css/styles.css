@@ -341,6 +341,46 @@ a, h3 {
     display: none;
   } 
   
+  .nav-menu {
+    display: flex;
+    align-items: center;
+}
+
+.profile-icon {
+    background: none;
+    border: none;
+    margin-left: 1rem;
+    font-size: 1.5rem;
+    color: #333;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+.profile-icon:hover {
+    color: #007bff;
+}
+
+.profile-icon::after {
+    content: 'Configuración del perfil';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.profile-icon:hover::after {
+    opacity: 1;
+}
 
 
   @media screen and (min-width: 1280px) and (max-width: 1440px) {
