@@ -38,11 +38,22 @@ async function obtenerApiKey() {
 async function obtenerPerfil(email) {
     const response = await fetch(apiClient.baseUrl + `/api/obtenerPerfil?email=${email}`);
     if (response.ok) {
-      const perfil = await response.json();
-      console.log(perfil);
-      return perfil;
+        const perfil = await response.json();
+        console.log(perfil);
+        return perfil;
     } else {
-      console.error('Error al obtener el perfil:', response.statusText);
+        console.error('Error al obtener el perfil:', response.statusText);
+    }
+}
+
+async function obtenerProductosML(descripcion) {
+    const response = await fetch(apiClient.baseUrl + `/api/searchProductsML?q=${descripcion}`);
+    if (response.ok) {
+        const productos = await response.json();
+        console.log(productos);
+        return productos;
+    } else {
+        console.error('Error al obtener Productos Mercado Libre:', response.statusText);
     }
 }
 
@@ -110,20 +121,32 @@ const vestimentaPrompt = `
 `;
 
 async function obtenerRecomendacionesVestimenta(estilo) {
+    document.getElementById('spinner-container').style.display = 'block';
     const apiKey = await obtenerApiKey();
     if (!apiKey) {
         alert('No se pudo obtener la clave API.');
         return;
     }
 
+    const perfil = await obtenerPerfil("correcto@domain.com");
+    if (!perfil) {
+        alert('No se pudo obtener el perfil del usuario.');
+        return;
+    }
+
     const prompt = `
-        ${vestimentaPrompt}
+        Eres un asistente de vestimenta útil. Proporciona recomendaciones para el estilo solicitado.
         Estilo solicitado: ${estilo}.
-        Proporciona las recomendaciones en el siguiente formato JSON:
+        Datos del usuario:
+        Nombre: ${perfil.nombre},
+        Género: ${perfil.genero},
+        Altura: ${perfil.altura} cm,
+        Cintura: ${perfil.cintura} cm,
+        Cadera: ${perfil.cadera} cm,
+        Pecho: ${perfil.pecho} cm,
+        Estilos preferidos: ${perfil.estilosPreferidos},
+        Fecha de nacimiento: ${perfil.fechaNacimiento}.
     `;
-    // Mostrar spinner y ocultar tabla
-    document.getElementById('spinner-container').style.display = 'block';
-    document.getElementById('response-container').style.display = 'none';
 
     try {
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -135,14 +158,8 @@ async function obtenerRecomendacionesVestimenta(estilo) {
             body: JSON.stringify({
                 model: 'gpt-4o-mini',
                 messages: [
-                    {
-                        "role": "system",
-                        "content": prompt
-                    },
-                    {
-                        "role": "user",
-                        "content": `Genera tres conjuntos de vestimenta para el estilo "${estilo}".`
-                    }
+                    { "role": "system", "content": prompt },
+                    { "role": "user", "content": `Genera tres conjuntos de vestimenta para el estilo "${estilo}".` }
                 ],
                 response_format: {
                     "type": "json_schema",
@@ -161,11 +178,11 @@ async function obtenerRecomendacionesVestimenta(estilo) {
                                                 "items": {
                                                     "type": "object",
                                                     "properties": {
-                                                        "item": {"type": "string"},
-                                                        "description": {"type": "string"},
-                                                        "color": {"type": "string"},
-                                                        "size": {"type": "string"},
-                                                        "price": {"type": "string"}
+                                                        "item": { "type": "string" },
+                                                        "description": { "type": "string" },
+                                                        "color": { "type": "string" },
+                                                        "size": { "type": "string" },
+                                                        "price": { "type": "string" }
                                                     },
                                                     "required": ["item", "description", "color", "size", "price"],
                                                     "additionalProperties": false
@@ -176,7 +193,7 @@ async function obtenerRecomendacionesVestimenta(estilo) {
                                         "additionalProperties": false
                                     }
                                 },
-                                "notes": {"type": "string"}
+                                "notes": { "type": "string" }
                             },
                             "required": ["outfits", "notes"],
                             "additionalProperties": false
@@ -190,22 +207,24 @@ async function obtenerRecomendacionesVestimenta(estilo) {
 
         const data = await response.json();
 
-        // Verifica que la respuesta contiene el contenido esperado
         if (data && data.choices && data.choices[0].message) {
-            const recomendaciones = data.choices[0].message;
+            const recomendaciones = JSON.parse(data.choices[0].message.content);
 
-            // Llama a renderizarTablaRecomendaciones con las recomendaciones
-            renderizarTablaRecomendaciones(recomendaciones.content);
-            // Ocultar spinner y mostrar tabla
-            document.getElementById('spinner-container').style.display = 'none';
-            document.getElementById('response-container').style.display = 'block';
+            // Enriquecer recomendaciones con opciones de Mercado Libre
+            for (const outfit of recomendaciones.outfits) {
+                for (const item of outfit.items) {
+                    const descripcion = `${item.item} de ${perfil.genero}, color: ${item.color}, talla: ${item.size}`;
+                    console.log(descripcion);
+                    item.opcionesML = await obtenerProductosML(descripcion); // Agrega las opcionesML
+                }
+            }
 
+            renderizarTablaRecomendaciones(recomendaciones);
         } else {
             console.error("Error en la respuesta de OpenAI");
         }
     } catch (error) {
-        // Ocultar spinner incluso en caso de error
-        document.getElementById('spinner-container').style.display = 'none';
+        console.error("Error al obtener las recomendaciones:", error);
         alert('Hubo un error al cargar los datos.');
     }
 }
@@ -213,12 +232,10 @@ async function obtenerRecomendacionesVestimenta(estilo) {
 
 
 
-function renderizarTablaRecomendaciones(outfits) {
 
-    // Si outfits es una cadena JSON, primero intenta extraer y parsear el JSON
+function renderizarTablaRecomendaciones(outfits) {
     if (typeof outfits === 'string') {
         try {
-            // Usa una expresión regular para capturar el bloque JSON entre llaves
             const jsonMatch = outfits.match(/{.*}/s);
             if (jsonMatch) {
                 outfits = JSON.parse(jsonMatch[0]);
@@ -236,7 +253,6 @@ function renderizarTablaRecomendaciones(outfits) {
     tabla.innerHTML = ''; // Limpia cualquier contenido previo
 
     outfits.outfits.forEach((outfit, index) => {
-        // Añadir un título para cada conjunto
         const headerRow = document.createElement('tr');
         const headerCell = document.createElement('td');
         headerCell.colSpan = 5;
@@ -245,7 +261,6 @@ function renderizarTablaRecomendaciones(outfits) {
         headerRow.appendChild(headerCell);
         tabla.appendChild(headerRow);
 
-        // Añadir cada prenda del conjunto a la tabla
         outfit.items.forEach(item => {
             const row = document.createElement('tr');
 
@@ -265,13 +280,87 @@ function renderizarTablaRecomendaciones(outfits) {
             sizeCell.textContent = item.size;
             row.appendChild(sizeCell);
 
-            const priceCell = document.createElement('td');
-            priceCell.textContent = item.price;
-            row.appendChild(priceCell);
+            const opcionesCell = document.createElement('td');
+
+            // Crear un contenedor para el carrusel
+            const carouselContainer = document.createElement('div');
+            carouselContainer.style.display = 'flex'; // Estilo para disposición horizontal
+            carouselContainer.style.overflowX = 'auto'; // Permitir desplazamiento horizontal
+            carouselContainer.style.gap = '10px'; // Espacio entre elementos
+
+            // Agregar las opciones al carrusel
+            item.opcionesML.forEach(opcion => {
+                const card = document.createElement('div');
+                card.style.display = 'flex';
+                card.style.flexDirection = 'column';
+                card.style.alignItems = 'center';
+                card.style.border = '1px solid #ccc';
+                card.style.padding = '10px';
+                card.style.width = '150px';
+                card.style.minWidth = '150px'; // Evitar que se colapsen
+                card.style.textAlign = 'center';
+
+                // Imagen
+                const image = document.createElement('img');
+                image.src = opcion.image;
+                image.alt = opcion.title;
+                image.style.width = '100%';
+                image.style.height = 'auto';
+
+                // Título sobre la imagen
+                const title = document.createElement('div');
+                title.textContent = opcion.title;
+                title.style.position = 'absolute';
+                title.style.top = '10px';
+                title.style.left = '10px';
+                title.style.color = 'white';
+                title.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
+                title.style.padding = '5px';
+                title.style.borderRadius = '3px';
+                title.style.fontSize = '12px';
+
+                // Precio debajo de la imagen
+                const price = document.createElement('div');
+                price.textContent = `$${opcion.price}`;
+                price.style.marginTop = '10px';
+                price.style.fontWeight = 'bold';
+
+                // Link al producto
+                const link = document.createElement('a');
+                link.href = opcion.link;
+                link.textContent = 'Visitar tienda';
+                link.target = '_blank';
+                link.style.display = 'inline-block';
+                link.style.marginTop = '5px';
+                link.style.padding = '5px 10px';
+                link.style.color = 'white';
+                link.style.backgroundColor = '#007bff';
+                link.style.textDecoration = 'none';
+                link.style.borderRadius = '3px';
+
+                // Ensamblar los elementos dentro de la tarjeta
+                card.appendChild(image);
+                card.appendChild(price);
+                card.appendChild(link);
+
+                // Añadir la tarjeta al contenedor del carrusel
+                carouselContainer.appendChild(card);
+            });
+
+            // Agregar el contenedor del carrusel a la celda
+            opcionesCell.appendChild(carouselContainer);
+
+            // Agregar la celda a la fila
+            row.appendChild(opcionesCell);
 
             tabla.appendChild(row);
         });
     });
+
+    // Mostrar el contenedor después de completar la tabla
+    document.getElementById('response-container').style.display = 'block';
+    document.getElementById('spinner-container').style.display = 'none';
 }
 
-  
+
+

@@ -451,3 +451,55 @@ a, h3 {
         font-size: 1.1rem;
     }
 }
+
+/* Estilo base del carrusel */
+td > div {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+    scroll-behavior: smooth;
+}
+
+td > div::-webkit-scrollbar {
+    height: 8px;
+}
+
+td > div::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
+}
+
+td > div::-webkit-scrollbar-thumb:hover {
+    background-color: #999;
+}
+
+/* Tarjetas del carrusel */
+td > div > div {
+    flex-shrink: 0;
+    width: 150px;
+    min-width: 150px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+td > div > div img {
+    width: 100%;
+    height: auto;
+}
+
+td > div > div a {
+    display: inline-block;
+    margin-top: 5px;
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 3px;
+}
+
+td > div > div a:hover {
+    background-color: #0056b3;
+}

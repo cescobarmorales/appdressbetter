@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Cerrar el menú al hacer clic fuera de él
     document.addEventListener('click', (event) => {
+        // if (!menuToggle.contains(event.target) && !menuList.contains(event.target)) {
         if (!menuToggle.contains(event.target) && !menuList.contains(event.target)) {
             menuList.classList.remove('show');
             menuToggle.setAttribute('aria-expanded', 'false');
