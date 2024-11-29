@@ -362,7 +362,7 @@ a, h3 {
 }
 
 .profile-icon::after {
-    content: 'Configuración del perfil';
+    content: 'Inicio';
     position: absolute;
     top: 100%;
     left: 50%;
@@ -381,6 +381,77 @@ a, h3 {
 .profile-icon:hover::after {
     opacity: 1;
 }
+
+/* Esitlos para introduccion */
+.split-layout {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    min-height: calc(100vh - 80px);
+}
+
+.intro-container {
+    flex: 1;
+    color: white;
+    background-color: rgba(128, 128, 128, 0.7); /* Gris con 70% de transparencia */
+    border-radius: 5px;
+    padding: 1rem;
+    transition: opacity 0.5s ease;
+}
+
+.intro-container.left-aligned {
+    text-align: left;
+    margin-right: 40px;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+}
+
+#user-name {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+#submit-name {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#submit-name:hover {
+    background-color: #0056b3;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.profile-config-container {
+    flex: 1;
+    display: none;
+    opacity: 0;
+    transition: opacity 1s ease, transform 1s ease;
+    transform: translateY(20px);
+}
+
+.profile-config-container.visible {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+/* Fin estilos introduccion */
 
 
   @media screen and (min-width: 1280px) and (max-width: 1440px) {

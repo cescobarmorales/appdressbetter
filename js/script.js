@@ -38,13 +38,11 @@ document.addEventListener('DOMContentLoaded', () => {
         img.onload = () => {
             container.style.backgroundImage = `url(${img.src})`;
         };
-    };
-
-
-
+    }
 
     
     lazyLoadBackground();
 
+    
 
 });
