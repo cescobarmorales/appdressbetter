@@ -1,19 +1,33 @@
-// Este es el archivo JavaScript para manejar la lógica de la llamada a la API de OpenAI
-
-
 // Instanciamos el cliente API con la URL de tu backend publicado en Vercel
 // const apiClient = new ApiClient('https://firebase-node-backend-jj3hl6pcl-estebanreinosos-projects.vercel.app/');
 const apiClient = new ApiClient('http://localhost:3000');
 
 // Eventos de Search
 document.getElementById('searchButton').addEventListener('click', enviarPregunta);
-// document.getElementById('fsearchInput').addEventListener('keypress', function (e) {
-//     if (e.key === 'Enter') {
-//         enviarPregunta();
-//     }
-// });
+
+// Texto Bajo el Avatar
+const introText = document.getElementById('intro-text-response');
+const nameInputContainer = document.getElementById('name-input-container');
+
+// Obtener el email del usuario almacenado
+const userEmail = localStorage.getItem('userEmail');
 
 let mensajes = [];
+let perfil = null; // Definimos la constante perfil
+
+// Cargar el perfil del usuario al inicio
+if (userEmail) {
+    obtenerPerfil(userEmail)
+        .then((perfilCargado) => {
+            perfil = perfilCargado;
+            console.log('Perfil cargado:', perfil);
+        })
+        .catch((error) => {
+            console.error('Error al cargar el perfil:', error);
+        });
+} else {
+    console.warn('No se encontró un email válido en el localStorage.');
+}
 
 async function obtenerApiKey() {
     try {
@@ -36,13 +50,17 @@ async function obtenerApiKey() {
 }
 
 async function obtenerPerfil(email) {
-    const response = await fetch(apiClient.baseUrl + `/api/obtenerPerfil?email=${email}`);
-    if (response.ok) {
-        const perfil = await response.json();
-        console.log(perfil);
-        return perfil;
-    } else {
-        console.error('Error al obtener el perfil:', response.statusText);
+    try {
+        const response = await fetch(apiClient.baseUrl + `/api/obtenerPerfil?email=${email}`);
+        if (response.ok) {
+            const perfil = await response.json();
+            return perfil;
+        } else {
+            throw new Error('Error al obtener el perfil:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Error al obtener el perfil:', error);
+        throw error;
     }
 }
 
@@ -117,7 +135,7 @@ async function enviarPregunta() {
 const vestimentaPrompt = `
     Eres un asistente de vestimenta útil. Te proporcionaré un estilo de vestimenta,
     y tu objetivo será devolver tres conjuntos de ropa con recomendaciones detalladas.
-    Para cada prenda, proporciona el nombre, descripción, color, talla y precio.
+    Cada conjunto de ropa debe tener maximo 3 prendas y para cada prenda, proporciona el nombre, descripción, color, talla y precio.
 `;
 
 async function obtenerRecomendacionesVestimenta(estilo) {
@@ -128,7 +146,6 @@ async function obtenerRecomendacionesVestimenta(estilo) {
         return;
     }
 
-    const perfil = await obtenerPerfil("correcto@domain.com");
     if (!perfil) {
         alert('No se pudo obtener el perfil del usuario.');
         return;
@@ -138,14 +155,12 @@ async function obtenerRecomendacionesVestimenta(estilo) {
         Eres un asistente de vestimenta útil. Proporciona recomendaciones para el estilo solicitado.
         Estilo solicitado: ${estilo}.
         Datos del usuario:
-        Nombre: ${perfil.nombre},
+        Colores Preferidos: ${perfil.coloresPreferidos},
+        Fecha de nacimiento: ${perfil.fechaNacimiento},
         Género: ${perfil.genero},
-        Altura: ${perfil.altura} cm,
-        Cintura: ${perfil.cintura} cm,
-        Cadera: ${perfil.cadera} cm,
-        Pecho: ${perfil.pecho} cm,
-        Estilos preferidos: ${perfil.estilosPreferidos},
-        Fecha de nacimiento: ${perfil.fechaNacimiento}.
+        Talla Calzado: ${perfil.tallaCalzado},
+        Talla Pantalón: ${perfil.tallaPantalon},
+        Talla Polera o Camisa: ${perfil.tallaPolera}
     `;
 
     try {
@@ -210,6 +225,10 @@ async function obtenerRecomendacionesVestimenta(estilo) {
         if (data && data.choices && data.choices[0].message) {
             const recomendaciones = JSON.parse(data.choices[0].message.content);
 
+            // escribe las notas bajo el avatar
+            // introText.innerHTML = "";
+            typeNotes(recomendaciones.notes);
+
             // Enriquecer recomendaciones con opciones de Mercado Libre
             for (const outfit of recomendaciones.outfits) {
                 for (const item of outfit.items) {
@@ -229,7 +248,19 @@ async function obtenerRecomendacionesVestimenta(estilo) {
     }
 }
 
-
+let charIndex = 0;
+function typeNotes(introMessage) {
+    if (charIndex < introMessage.length) {
+        introText.innerHTML += introMessage.charAt(charIndex);
+        charIndex++;
+        setTimeout(typeNotes(introMessage), 50);
+    } else {
+        setTimeout(() => {
+            nameInputContainer.style.display = 'flex';
+            charIndex = 0
+        }, 500);
+    }
+}
 
 
 
