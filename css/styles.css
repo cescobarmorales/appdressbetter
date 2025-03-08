@@ -451,6 +451,17 @@ a, h3 {
     opacity: 1;
     transform: translateY(0);
 }
+.form-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+@media (max-width: 768px) {
+    .form-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
 /* Fin estilos introduccion */
 
 
