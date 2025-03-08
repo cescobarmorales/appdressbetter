@@ -8,6 +8,7 @@
     <title>App Dress Better</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/categorias.css">
+    <link rel="stylesheet" href="css/user.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -100,23 +101,53 @@
         <div id="intro-container" class="intro-container">
             <h1 id="intro-text-response" class="intro-text">...</h1>
         </div>
-       <!-- Sección de Partners -->
-        <h2 class="partners-title" id="partners">Nuestros Partners</h2>
-        <div class="partners-container">
-            <div class="partner">
-                <img src="img/falabella.png" alt="Logo de Noticias">
+        <section class="satisfaction-section" id="satisfaction">
+            <h2 class="satisfaction-title">¿Qué tan satisfecho estás con nuestro servicio?</h2>
+            <div class="satisfaction-container">
+              <div class="rating-scale">
+                <div class="rating-option">
+                  <input type="radio" id="rating-1" name="satisfaction" value="1">
+                  <label for="rating-1">
+                    <span class="emoji">😡</span>
+                    <span class="rating-text">Muy insatisfecho</span>
+                  </label>
+                </div>
+                <div class="rating-option">
+                  <input type="radio" id="rating-2" name="satisfaction" value="2">
+                  <label for="rating-2">
+                    <span class="emoji">😕</span>
+                    <span class="rating-text">Insatisfecho</span>
+                  </label>
+                </div>
+                <div class="rating-option">
+                  <input type="radio" id="rating-3" name="satisfaction" value="3">
+                  <label for="rating-3">
+                    <span class="emoji">😐</span>
+                    <span class="rating-text">Neutral</span>
+                  </label>
+                </div>
+                <div class="rating-option">
+                  <input type="radio" id="rating-4" name="satisfaction" value="4">
+                  <label for="rating-4">
+                    <span class="emoji">🙂</span>
+                    <span class="rating-text">Satisfecho</span>
+                  </label>
+                </div>
+                <div class="rating-option">
+                  <input type="radio" id="rating-5" name="satisfaction" value="5">
+                  <label for="rating-5">
+                    <span class="emoji">😄</span>
+                    <span class="rating-text">Muy satisfecho</span>
+                  </label>
+                </div>
+              </div>
+              <div class="feedback-container">
+                <textarea id="user-feedback" placeholder="Cuéntanos más sobre tu experiencia (opcional)"></textarea>
+                <button id="submit-feedback" class="feedback-btn">Enviar opinión</button>
+              </div>
             </div>
-            <div class="partner">
-                <img src="img/paris.png" alt="Logo de Correo">
-            </div>
-            <div class="partner">
-                <img src="img/ripley.png" alt="Logo de Tienda">
-            </div>
-            <div class="partner">
-                <img src="img/hm.png" alt="Logo de Asistente AI">
-            </div>
-        </div>
-        </div>
+          </section>
+                
     
         <!-- Spinner -->
         <div class="spinner" id="spinner" style="display:none;">
@@ -124,6 +155,35 @@
             <div class="bounce2"></div>
             <div class="bounce3"></div>
         </div>
+
+        <script>
+            document.querySelectorAll('input[name="satisfaction"]').forEach(input => {
+              input.addEventListener('change', function() {
+                // Highlight the selected rating
+                document.querySelectorAll('.rating-option label').forEach(label => {
+                  label.style.opacity = '0.5';
+                });
+                this.nextElementSibling.style.opacity = '1';
+              });
+            });
+            
+            document.getElementById('submit-feedback').addEventListener('click', function() {
+              const selectedRating = document.querySelector('input[name="satisfaction"]:checked');
+              const feedbackText = document.getElementById('user-feedback').value;
+              
+              if (!selectedRating) {
+                alert('Por favor selecciona un nivel de satisfacción antes de enviar.');
+                return;
+              }
+              
+              // Here you would normally send the data to your server
+              alert('¡Gracias por tu opinión! Tu valoración: ' + selectedRating.value);
+              
+              // Clear form
+              document.querySelector('input[name="satisfaction"]:checked').checked = false;
+              document.getElementById('user-feedback').value = '';
+            });
+          </script>
 
     <!-- Scripts originales mantenidos -->
     <script src="js/script.js" defer></script>

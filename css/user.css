@@ -138,3 +138,105 @@ body {
         font-size: 14px;
     }
 }
+
+ 
+.satisfaction-section {
+    background-color: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .satisfaction-title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 24px;
+  }
+  
+  .rating-scale {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+  }
+  
+  .rating-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 20%;
+  }
+  
+  .rating-option input[type="radio"] {
+    display: none;
+  }
+  
+  .rating-option label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .emoji {
+    font-size: 32px;
+    margin-bottom: 8px;
+    transition: transform 0.2s;
+  }
+  
+  .rating-text {
+    font-size: 14px;
+    text-align: center;
+    color: #666;
+  }
+  
+  .rating-option input[type="radio"]:checked + label .emoji {
+    transform: scale(1.3);
+  }
+  
+  .rating-option input[type="radio"]:checked + label .rating-text {
+    color: #000;
+    font-weight: bold;
+  }
+  
+  .feedback-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  #user-feedback {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 12px;
+    min-height: 100px;
+    margin-bottom: 15px;
+    resize: vertical;
+    font-family: inherit;
+  }
+  
+  .feedback-btn {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .feedback-btn:hover {
+    background-color: #1d4ed8;
+  }
+  
+  @media (max-width: 500px) {
+    .rating-scale {
+      flex-wrap: wrap;
+    }
+    
+    .rating-option {
+      width: 33%;
+      margin-bottom: 15px;
+    }
+  }
