@@ -5,6 +5,7 @@
     background-position: center;
     width: 100%;
     background-image: url('../img/fondo2.jpg');
+    overflow-y: auto;
 }
 
 /* Header y navegación */
