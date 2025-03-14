@@ -225,9 +225,7 @@ async function obtenerRecomendacionesVestimenta(estilo) {
         if (data && data.choices && data.choices[0].message) {
             const recomendaciones = JSON.parse(data.choices[0].message.content);
 
-            // escribe las notas bajo el avatar
-            introText.innerHTML = "";
-            typeNotes(recomendaciones.notes);
+            
 
             // Enriquecer recomendaciones con opciones de Mercado Libre
             for (const outfit of recomendaciones.outfits) {
@@ -239,6 +237,10 @@ async function obtenerRecomendacionesVestimenta(estilo) {
             }
 
             renderizarTablaRecomendaciones(recomendaciones);
+            // escribe las notas bajo el avatar
+            introText.innerHTML = "";
+            typeNotes(recomendaciones.notes);
+            
         } else {
             console.error("Error en la respuesta de OpenAI");
         }
