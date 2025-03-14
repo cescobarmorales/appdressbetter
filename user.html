@@ -2,20 +2,20 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Página de inicio personalizada con buscador y menú de navegación">
-    <title>App Dress Better</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/categorias.css">
-    <link rel="stylesheet" href="css/user.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Página de inicio personalizada con buscador y menú de navegación">
+  <title>App Dress Better</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/categorias.css">
+  <link rel="stylesheet" href="css/user.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <script type="importmap">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+  <script type="importmap">
         {
           "imports": {
             "three": "https://unpkg.com/three@v0.158.0/build/three.module.js",
@@ -24,168 +24,174 @@
         }
     </script>
 
-    <script type="module" src="js/avatar.js"></script>
-    
+  <script type="module" src="js/avatar.js"></script>
+
 </head>
 
 <body>
-    <div class="app-container">
-        <header class="header">
-            <div class="header-content">
-                <div class="logo" aria-label="Logo Corporativo">
-                    <img src="img/logoApp.png" alt="Logo Corporativo" width="40" height="40">
-                </div>
-                <nav class="nav-menu" aria-label="Menú principal">
-                    <button id="searchButton" class="menu-toggle" aria-expanded="false" aria-controls="menu-list" style="display: none;">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                    
-                    <!-- Profile icon with tooltip -->
-                    <a href="index.html" id="profileButton" class="profile-icon" aria-label="Configuración del perfil" style="text-decoration: none;">
-                        Inicio
-                        <i class="fas fa-user-circle"></i>
-                    </a>
-                </nav>
-            </div>
-        </header>
+  <div class="app-container">
+    <header class="header">
+      <div class="header-content">
+        <div class="logo" aria-label="Logo Corporativo">
+          <img src="img/logoApp.png" alt="Logo Corporativo" width="40" height="40">
+        </div>
+        <nav class="nav-menu" aria-label="Menú principal">
+          <button id="searchButton" class="menu-toggle" aria-expanded="false" aria-controls="menu-list"
+            style="display: none;">
+            <i class="fas fa-bars"></i>
+          </button>
 
-        <main class="main-content">
-            <div class="content-grid">
-                <section class="avatar-section" id="home">
-                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <button class="btn btn-secondary" onclick="obtenerRecomendacionesVestimenta('formal')">Formal</button>
-                        <button class="btn btn-secondary" onclick="obtenerRecomendacionesVestimenta('deportivo')">Deportivo</button>
-                        <button class="btn btn-secondary" onclick="obtenerRecomendacionesVestimenta('urbano')">Urbano</button>
-                        <button class="btn btn-secondary" onclick="obtenerRecomendacionesVestimenta('fiestas')">Fiestas</button>
-                        <button class="btn btn-secondary" onclick="obtenerRecomendacionesVestimenta('montaña')">Montaña</button>
-                        <button class="btn btn-secondary" onclick="obtenerRecomendacionesVestimenta('playa')">Playa</button>
-                    </div>
-                    <!-- <div id="avatar-container">
+          <!-- Profile icon with tooltip -->
+          <a href="index.html" id="profileButton" class="profile-icon" aria-label="Configuración del perfil"
+            style="text-decoration: none;">
+            Inicio
+            <i class="fas fa-user-circle"></i>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <div class="content-grid">
+        <section class="avatar-section" id="home">
+          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <button class="btn btn-secondary" onclick="obtenerRecomendacionesVestimenta('formal')">Formal</button>
+            <button class="btn btn-secondary" onclick="obtenerRecomendacionesVestimenta('deportivo')">Deportivo</button>
+            <button class="btn btn-secondary" onclick="obtenerRecomendacionesVestimenta('urbano')">Urbano</button>
+            <button class="btn btn-secondary" onclick="obtenerRecomendacionesVestimenta('fiestas')">Fiestas</button>
+            <button class="btn btn-secondary" onclick="obtenerRecomendacionesVestimenta('montaña')">Montaña</button>
+            <button class="btn btn-secondary" onclick="obtenerRecomendacionesVestimenta('playa')">Playa</button>
+          </div>
+          <!-- <div id="avatar-container">
                         <div id="avatar-loading"></div>
                     </div> -->
-                </section>
-
-                <section class="table-section">
-                    <div id="spinner-container" style="display: none; text-align: center; margin: 20px 0;">
-                        <div class="spinner">
-                            <div class="bounce1"></div>
-                            <div class="bounce2"></div>
-                            <div class="bounce3"></div>
-                        </div>
-                        <p style="color: white;">Cargando datos...</p>
-                    </div>
-                    
-                    <div id="response-container" style="display: none;">
-                        <table id="tblresultado" class="tableResult">
-                            <thead>
-                                <tr>
-                                    <th>Item</th>
-                                    <th>Descripción</th>
-                                    <th>Color</th>
-                                    <th>Talla</th>
-                                    <th>Precio</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tabla-recomendaciones">
-                                <!-- Contenido dinámico -->
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
-            </div>
-            
-           
-        </main>
-        
-        
-        <br>
-         <!-- Removed duplicate satisfaction section and kept only one -->
-         <section class="satisfaction-section" id="satisfaction">
-          <h2 class="satisfaction-title">¿Qué tan satisfecho estás con nuestro servicio?</h2>
-          <div class="satisfaction-container">
-            <div class="rating-scale">
-              <div class="rating-option">
-                <input type="radio" id="rating-1" name="satisfaction" value="1">
-                <label for="rating-1">
-                  <span class="emoji">😡</span>
-                  <span class="rating-text">Muy insatisfecho</span>
-                </label>
-              </div>
-              <div class="rating-option">
-                <input type="radio" id="rating-2" name="satisfaction" value="2">
-                <label for="rating-2">
-                  <span class="emoji">😕</span>
-                  <span class="rating-text">Insatisfecho</span>
-                </label>
-              </div>
-              <div class="rating-option">
-                <input type="radio" id="rating-3" name="satisfaction" value="3">
-                <label for="rating-3">
-                  <span class="emoji">😐</span>
-                  <span class="rating-text">Neutral</span>
-                </label>
-              </div>
-              <div class="rating-option">
-                <input type="radio" id="rating-4" name="satisfaction" value="4">
-                <label for="rating-4">
-                  <span class="emoji">🙂</span>
-                  <span class="rating-text">Satisfecho</span>
-                </label>
-              </div>
-              <div class="rating-option">
-                <input type="radio" id="rating-5" name="satisfaction" value="5">
-                <label for="rating-5">
-                  <span class="emoji">😄</span>
-                  <span class="rating-text">Muy satisfecho</span>
-                </label>
-              </div>
-            </div>
-            <div class="feedback-container">
-              <textarea id="user-feedback" placeholder="Cuéntanos más sobre tu experiencia (opcional)"></textarea>
-              <button id="submit-feedback" class="feedback-btn">Enviar opinión</button>
-            </div>
+          <div id="intro-container" class="intro-container">
+            <h1 id="intro-text" class="intro-text"></h1>
           </div>
         </section>
-        <!-- Spinner -->
-        <div class="spinner" id="spinner" style="display:none;">
-            <div class="bounce1"></div>
-            <div class="bounce2"></div>
-            <div class="bounce3"></div>
+
+        <section class="table-section">
+          <div id="spinner-container" style="display: none; text-align: center; margin: 20px 0;">
+            <div class="spinner">
+              <div class="bounce1"></div>
+              <div class="bounce2"></div>
+              <div class="bounce3"></div>
+            </div>
+            <p style="color: white;">Cargando datos...</p>
+          </div>
+
+          <div id="response-container" style="display: none;">
+            <table id="tblresultado" class="tableResult">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Descripción</th>
+                  <th>Color</th>
+                  <th>Talla</th>
+                  <th>Precio</th>
+                </tr>
+              </thead>
+              <tbody id="tabla-recomendaciones">
+                <!-- Contenido dinámico -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+
+    </main>
+
+
+    <br>
+    <!-- Removed duplicate satisfaction section and kept only one -->
+    <section class="satisfaction-section" id="satisfaction">
+      <h2 class="satisfaction-title">¿Qué tan satisfecho estás con nuestro servicio?</h2>
+      <div class="satisfaction-container">
+        <div class="rating-scale">
+          <div class="rating-option">
+            <input type="radio" id="rating-1" name="satisfaction" value="1">
+            <label for="rating-1">
+              <span class="emoji">😡</span>
+              <span class="rating-text">Muy insatisfecho</span>
+            </label>
+          </div>
+          <div class="rating-option">
+            <input type="radio" id="rating-2" name="satisfaction" value="2">
+            <label for="rating-2">
+              <span class="emoji">😕</span>
+              <span class="rating-text">Insatisfecho</span>
+            </label>
+          </div>
+          <div class="rating-option">
+            <input type="radio" id="rating-3" name="satisfaction" value="3">
+            <label for="rating-3">
+              <span class="emoji">😐</span>
+              <span class="rating-text">Neutral</span>
+            </label>
+          </div>
+          <div class="rating-option">
+            <input type="radio" id="rating-4" name="satisfaction" value="4">
+            <label for="rating-4">
+              <span class="emoji">🙂</span>
+              <span class="rating-text">Satisfecho</span>
+            </label>
+          </div>
+          <div class="rating-option">
+            <input type="radio" id="rating-5" name="satisfaction" value="5">
+            <label for="rating-5">
+              <span class="emoji">😄</span>
+              <span class="rating-text">Muy satisfecho</span>
+            </label>
+          </div>
         </div>
+        <div class="feedback-container">
+          <textarea id="user-feedback" placeholder="Cuéntanos más sobre tu experiencia (opcional)"></textarea>
+          <button id="submit-feedback" class="feedback-btn">Enviar opinión</button>
+        </div>
+      </div>
+    </section>
+    <!-- Spinner -->
+    <div class="spinner" id="spinner" style="display:none;">
+      <div class="bounce1"></div>
+      <div class="bounce2"></div>
+      <div class="bounce3"></div>
     </div>
+  </div>
 
-    <script>
-        document.querySelectorAll('input[name="satisfaction"]').forEach(input => {
-          input.addEventListener('change', function() {
-            // Highlight the selected rating
-            document.querySelectorAll('.rating-option label').forEach(label => {
-              label.style.opacity = '0.5';
-            });
-            this.nextElementSibling.style.opacity = '1';
-          });
+  <script>
+    document.querySelectorAll('input[name="satisfaction"]').forEach(input => {
+      input.addEventListener('change', function () {
+        // Highlight the selected rating
+        document.querySelectorAll('.rating-option label').forEach(label => {
+          label.style.opacity = '0.5';
         });
-        
-        document.getElementById('submit-feedback').addEventListener('click', function() {
-          const selectedRating = document.querySelector('input[name="satisfaction"]:checked');
-          const feedbackText = document.getElementById('user-feedback').value;
-          
-          if (!selectedRating) {
-            alert('Por favor selecciona un nivel de satisfacción antes de enviar.');
-            return;
-          }
-          
-          // Here you would normally send the data to your server
-          alert('¡Gracias por tu opinión! Tu valoración: ' + selectedRating.value);
-          
-          // Clear form
-          document.querySelector('input[name="satisfaction"]:checked').checked = false;
-          document.getElementById('user-feedback').value = '';
-        });
-    </script>
+        this.nextElementSibling.style.opacity = '1';
+      });
+    });
 
-    <!-- Scripts originales mantenidos -->
-    <script src="js/script.js" defer></script>
-    <script src="js/apiClient.js"></script>
-    <script src="js/chatbot.js"></script>
+    document.getElementById('submit-feedback').addEventListener('click', function () {
+      const selectedRating = document.querySelector('input[name="satisfaction"]:checked');
+      const feedbackText = document.getElementById('user-feedback').value;
+
+      if (!selectedRating) {
+        alert('Por favor selecciona un nivel de satisfacción antes de enviar.');
+        return;
+      }
+
+      // Here you would normally send the data to your server
+      alert('¡Gracias por tu opinión! Tu valoración: ' + selectedRating.value);
+
+      // Clear form
+      document.querySelector('input[name="satisfaction"]:checked').checked = false;
+      document.getElementById('user-feedback').value = '';
+    });
+  </script>
+
+  <!-- Scripts originales mantenidos -->
+  <script src="js/script.js" defer></script>
+  <script src="js/apiClient.js"></script>
+  <script src="js/chatbot.js"></script>
 </body>
+
 </html>

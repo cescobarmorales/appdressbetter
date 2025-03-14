@@ -6,7 +6,7 @@ const apiClient = new ApiClient('http://localhost:3000');
 document.getElementById('searchButton').addEventListener('click', enviarPregunta);
 
 // Texto Bajo el Avatar
-const introText = document.getElementById('intro-text-response');
+const introText = document.getElementById('intro-text');
 const nameInputContainer = document.getElementById('name-input-container');
 
 // Obtener el email del usuario almacenado
@@ -226,7 +226,7 @@ async function obtenerRecomendacionesVestimenta(estilo) {
             const recomendaciones = JSON.parse(data.choices[0].message.content);
 
             // escribe las notas bajo el avatar
-            // introText.innerHTML = "";
+            introText.innerHTML = "";
             typeNotes(recomendaciones.notes);
 
             // Enriquecer recomendaciones con opciones de Mercado Libre
@@ -291,8 +291,10 @@ function renderizarTablaRecomendaciones(outfits) {
         headerCell.style.fontWeight = 'bold';
         headerRow.appendChild(headerCell);
         tabla.appendChild(headerRow);
+        
 
-        outfit.items.forEach(item => {
+        outfit.items.forEach(async item => {
+
             const row = document.createElement('tr');
 
             const itemCell = document.createElement('td');
