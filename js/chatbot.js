@@ -293,7 +293,7 @@ function renderizarTablaRecomendaciones(outfits) {
         tabla.appendChild(headerRow);
         
 
-        outfit.items.forEach(async item => {
+        outfit.items.forEach( item => {
 
             const row = document.createElement('tr');
 
