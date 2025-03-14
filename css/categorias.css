@@ -20,6 +20,7 @@
 /* Layout principal */
 .main-content {
     padding: 2rem 0;
+    gap: 2rem;
     min-height: calc(100vh - 200px);
 }
 

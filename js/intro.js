@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-    const introMessage = " Hola, soy tu asistente virtual de Moda DressBetter. Cuéntame sobre ti, ¿Cuál es tu nombre?";
+    const introMessage = ", soy tu asistente virtual de Moda. Cuéntame sobre ti, ¿Cuál es tu nombre?";
     let charIndex = 0;
 
     function typeIntro() {
