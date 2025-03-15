@@ -62,13 +62,12 @@
             <button class="btn btn-secondary" onclick="obtenerRecomendacionesVestimenta('montaña')">Montaña</button>
             <button class="btn btn-secondary" onclick="obtenerRecomendacionesVestimenta('playa')">Playa</button>
           </div>
-          <div id="intro-container" class="intro-container">
-            <h1 id="intro-text" class="intro-text"></h1>
-          </div>
+          
           <div id="avatar-container">
-                        <div id="avatar-loading"></div>
-                    </div>
+            <div id="avatar-loading"></div>
+          </div>
         </section>
+        
 
         <section class="table-section">
           <div id="spinner-container" style="display: none; text-align: center; margin: 20px 0;">
@@ -98,14 +97,13 @@
           </div>
         </section>
       </div>
-
-
+        <div id="intro-container" class="intro-subtext">
+          <h1 id="intro-text" class="subtext"></h1>
+        </div>
     </main>
-
-
-    <br>
     <!-- Removed duplicate satisfaction section and kept only one -->
     <section class="satisfaction-section" id="satisfaction">
+      
       <h2 class="satisfaction-title">¿Qué tan satisfecho estás con nuestro servicio?</h2>
       <div class="satisfaction-container">
         <div class="rating-scale">
@@ -159,39 +157,13 @@
     </div>
   </div>
 
-  <script>
-    document.querySelectorAll('input[name="satisfaction"]').forEach(input => {
-      input.addEventListener('change', function () {
-        // Highlight the selected rating
-        document.querySelectorAll('.rating-option label').forEach(label => {
-          label.style.opacity = '0.5';
-        });
-        this.nextElementSibling.style.opacity = '1';
-      });
-    });
-
-    document.getElementById('submit-feedback').addEventListener('click', function () {
-      const selectedRating = document.querySelector('input[name="satisfaction"]:checked');
-      const feedbackText = document.getElementById('user-feedback').value;
-
-      if (!selectedRating) {
-        alert('Por favor selecciona un nivel de satisfacción antes de enviar.');
-        return;
-      }
-
-      // Here you would normally send the data to your server
-      alert('¡Gracias por tu opinión! Tu valoración: ' + selectedRating.value);
-
-      // Clear form
-      document.querySelector('input[name="satisfaction"]:checked').checked = false;
-      document.getElementById('user-feedback').value = '';
-    });
-  </script>
+  
 
   <!-- Scripts originales mantenidos -->
   <script src="js/script.js" defer></script>
   <script src="js/apiClient.js"></script>
   <script src="js/chatbot.js"></script>
+  <script src="js/escalaValor.js"></script>
 </body>
 
 </html>

@@ -1,3 +1,9 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 .app-container {
     position: relative;
     height: 100vh;
@@ -129,120 +135,153 @@
 }
 
 /* Estilos para la Tabla */
+/* Estilos para la Tabla - Mejorados */
 .table-section {
     width: 100%;
     max-height: calc(100vh - 100px);
     overflow-y: auto;
     margin-bottom: 2rem;
-    background-color: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(5px);
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
     border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    padding: 1rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    padding: 1.5rem;
+    transition: all 0.3s ease;
 }
 
 #response-container {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
+    background: transparent;
     border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .tableResult {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
     color: #f8f8f8;
     font-family: 'Arial', sans-serif;
     font-size: 1rem;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
 }
 
 .tableResult thead {
-    background: linear-gradient(90deg, rgba(168, 168, 168, 0.538) 0%, rgba(1, 112, 202, 0.936));
+    background: linear-gradient(90deg, rgba(1, 112, 202, 0.8) 0%, rgba(1, 112, 202, 0.6) 100%);
     color: white;
     position: sticky;
     top: 0;
     z-index: 10;
-    text-transform: uppercase;
-    font-weight: bold;
-    letter-spacing: 1px;
-}
-
-.tableResult th,
-.tableResult td {
-    padding: 1rem 1.5rem;
-    text-align: left;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    text-decoration: none;
 }
 
 .tableResult th {
-    background-color: rgba(0, 0, 0, 0.1);
-    color: #fff;
+    padding: 1.2rem 1.5rem;
+    text-align: left;
+    font-weight: 600;
+    letter-spacing: 1px;
     text-transform: uppercase;
+    font-size: 0.9rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
 }
 
+.tableResult td {
+    padding: 1rem 1.5rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 1rem;
+    color: black;
+    transition: all 0.2s ease;
+}
+
+/* Estilos para las filas normales */
 .tableResult tbody tr {
+    background: rgba(255, 255, 255, 0.05);
     transition: all 0.3s ease;
 }
 
 .tableResult tbody tr:nth-child(even) {
-    background: rgba(255, 255, 255, 0.05);
-}
-.tableResult tbody tr {
-    background: rgba(255, 255, 255, 0.05);
-    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .tableResult tbody tr:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.tableResult td {
-    padding: 1rem 1.5rem;
-    border: none;
-    color: #f8f8f8;
+    background: rgba(255, 255, 255, 0.12);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Estilos para las filas de categoría */
-.tableResult tbody tr:first-child,
-.tableResult tbody tr:nth-child(5),
-.tableResult tbody tr:nth-child(9)
- {
-    background: linear-gradient(90deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 100%);
+.tableResult tbody tr.conjunto-header {
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.3) 100%);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
-
 .tableResult tbody tr:first-child td,
 .tableResult tbody tr:nth-child(5) td,
-.tableResult tbody tr:nth-child(9) td{
+.tableResult tbody tr:nth-child(9) td {
     padding: 1.2rem 1.5rem;
-    color: #ffffff;
-    font-size: 1.1rem;
+    color: black;
+    font-size: 1rem;
 }
 
 /* Estilos para columnas específicas */
 .tableResult td:nth-child(1) { /* Item */
     font-weight: 500;
+    width: 15%;
+}
+
+.tableResult td:nth-child(2) { /* Descripción */
+    width: 25%;
 }
 
 .tableResult td:nth-child(3), /* Color */
 .tableResult td:nth-child(4) { /* Talla */
     text-align: center;
+    width: 10%;
 }
 
 .tableResult td:nth-child(5) { /* Precio */
     font-weight: 700;
     color: #4CAF50;
     text-align: right;
+    width: 15%;
+}
+
+/* Spinner y animación para carga */
+#spinner-container {
+    padding: 5px;
+}
+
+.spinner {
+    margin: 0 auto;
+    width: 90px;
+    text-align: center;
+}
+
+.spinner > div {
+    width: 18px;
+    height: 18px;
+    background-color: #ffffff;
+    border-radius: 100%;
+    display: inline-block;
+    animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.spinner .bounce1 {
+    animation-delay: -0.32s;
+}
+
+.spinner .bounce2 {
+    animation-delay: -0.16s;
+}
+
+@keyframes sk-bouncedelay {
+    0%, 80%, 100% { 
+        transform: scale(0);
+    } 40% { 
+        transform: scale(1.0);
+    }
 }
 
 /* Animación de entrada para las filas */
@@ -259,192 +298,30 @@
 
 .tableResult tbody tr {
     animation: fadeIn 0.3s ease-out forwards;
+    animation-fill-mode: both;
     opacity: 0;
 }
 
 .tableResult tbody tr:nth-child(1) { animation-delay: 0.1s; }
-.tableResult tbody tr:nth-child(2) { animation-delay: 0.2s; }
-.tableResult tbody tr:nth-child(3) { animation-delay: 0.3s; }
-.tableResult tbody tr:nth-child(4) { animation-delay: 0.4s; }
-.tableResult tbody tr:nth-child(5) { animation-delay: 0.5s; }
+.tableResult tbody tr:nth-child(2) { animation-delay: 0.15s; }
+.tableResult tbody tr:nth-child(3) { animation-delay: 0.2s; }
+.tableResult tbody tr:nth-child(4) { animation-delay: 0.25s; }
+.tableResult tbody tr:nth-child(5) { animation-delay: 0.3s; }
+.tableResult tbody tr:nth-child(6) { animation-delay: 0.35s; }
+.tableResult tbody tr:nth-child(7) { animation-delay: 0.4s; }
+.tableResult tbody tr:nth-child(8) { animation-delay: 0.45s; }
+.tableResult tbody tr:nth-child(9) { animation-delay: 0.5s; }
+.tableResult tbody tr:nth-child(10) { animation-delay: 0.55s; }
 
 /* Responsive design */
-@media (max-width: 768px) {
-    .tableResult thead {
-        display: none;
-    }
-
-    .tableResult tbody tr {
-        display: block;
-        margin-bottom: 1rem;
-        border-radius: 8px;
-        overflow: hidden;
-    }
-
-    .tableResult td {
-        display: block;
-        text-align: right;
-        padding: 0.5rem 1rem;
-        position: relative;
-    }
-
-    .tableResult td::before {
-        content: attr(data-label);
-        position: absolute;
-        left: 1rem;
-        width: 45%;
-        text-align: left;
-        font-weight: 600;
-    }
-
-    .tableResult tbody tr:first-child,
-    .tableResult tbody tr:nth-child(5) {
-        background: linear-gradient(90deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.4) 100%);
-        padding: 0.5rem;
-        border-radius: 8px;
-    }
-
-    .tableResult tbody tr:first-child td,
-    .tableResult tbody tr:nth-child(5) td {
-        text-align: center;
-        padding: 0.5rem;
-    }
-}
-
-.tableResult td {
-    padding: 1rem;
-    color: black;
-    text-decoration: none;
-}
-
-.tableResult td:hover {
-    color: #2575FC;
-    cursor: pointer;
-}
-
-/* Estilos de los botones de acción en la tabla */
-.tableResult .btn-action {
-    background-color: rgba(34, 193, 195, 1);
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 10px;
-    text-transform: uppercase;
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.tableResult .btn-action:hover {
-    background-color: rgba(253, 187, 45, 1);
-}
-
-/* Estilos para las celdas de datos con un diseño más llamativo */
-.tableResult td {
-    position: relative;
-    padding-left: 30px;
-}
-
-.tableResult td::before {
-    content: '';
-    position: absolute;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    transition: all 0.3s ease;
-    text-decoration: none;
-}
-
-
-/* Estilos de la tabla en dispositivos móviles */
-@media (max-width: 768px) {
-    .tableResult thead {
-        display: none;
-    }
-
-    .tableResult tbody tr {
-        display: block;
-        margin-bottom: 1rem;
-        border-bottom: 2px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .tableResult td {
-        display: block;
-        text-align: right;
-        padding-left: 50%;
-        position: relative;
-    }
-
-    .tableResult td:before {
-        content: attr(data-label);
-        position: absolute;
-        left: 1rem;
-        width: 45%;
-        text-align: left;
-        font-weight: bold;
-        color: #f8f8f8;
-    }
-}
-
-
-/* Animations */
-@keyframes fadeIn {
-    from { 
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); opacity: 0.5; }
-    50% { transform: scale(1.1); opacity: 0.8; }
-    100% { transform: scale(1); opacity: 0.5; }
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Responsive Design Mejorado */
-@media (max-width: 1200px) {
-    .content-grid {
-        grid-template-columns: 1fr 1.5fr;
-    }
-}
-
 @media (max-width: 992px) {
-    .content-grid {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-    }
-
-    .avatar-section {
-        position: relative;
-        top: 0;
-    }
-
     .table-section {
         max-height: none;
-    }
-
-    #response-container {
-        margin-top: 2rem;
+        padding: 1rem;
     }
 }
 
 @media (max-width: 768px) {
-    .btn-group {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
     .tableResult {
         font-size: 0.9rem;
     }
@@ -456,49 +333,274 @@
     .tableResult tbody tr {
         display: block;
         margin-bottom: 1rem;
-        border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        background: rgba(255, 255, 255, 0.05);
     }
 
     .tableResult td {
-        display: block;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         text-align: right;
-        padding-left: 50%;
-        position: relative;
+        padding: 0.8rem 1rem;
     }
 
-    .tableResult td:before {
+    .tableResult td::before {
         content: attr(data-label);
-        position: absolute;
-        left: 1rem;
-        width: 45%;
-        text-align: left;
         font-weight: 600;
+        margin-right: 1rem;
+        text-align: left;
+        color: rgba(255, 255, 255, 0.8);
     }
 
-    #avatar-container {
-        width: 300px;
-        height: 300px;
+    /* Categorías en mobile */
+    .tableResult tbody tr:first-child,
+    .tableResult tbody tr:nth-child(5),
+    .tableResult tbody tr:nth-child(9) {
+        padding: 0;
+    }
+
+    .tableResult tbody tr:first-child td,
+    .tableResult tbody tr:nth-child(5) td,
+    .tableResult tbody tr:nth-child(9) td {
+        justify-content: center;
+        text-align: center;
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    
+    .tableResult tbody tr:first-child td::before,
+    .tableResult tbody tr:nth-child(5) td::before,
+    .tableResult tbody tr:nth-child(9) td::before {
+        display: none;
     }
 }
 
-@media (max-width: 480px) {
-    .btn-group {
-        grid-template-columns: 1fr;
-    }
+/* Estilos para la celda de opciones */
+.options-cell {
+    padding: 0.75rem !important;
+    width: auto !important;
+}
 
-    .partners-container {
-        grid-template-columns: repeat(2, 1fr);
+/* Contenedor del carrusel */
+.carousel-container {
+    position: relative;
+    width: 100%;
+    height: 210px; /* Altura fija para el carrusel */
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+}
+/* Cinta del carrusel que se anima */
+.carousel-track {
+    display: flex;
+    position: absolute;
+    width: max-content; /* Para contener todos los elementos */
+    animation: carouselScroll 30s linear infinite; /* Ajusta la duración según la cantidad de elementos */
+    padding: 10px 0;
+}
+/* Animación del desplazamiento continuo */
+@keyframes carouselScroll {
+    0% {
+        transform: translateX(0);
     }
-
-    .app-container {
-        padding: 0.5rem;
+    100% {
+        transform: translateX(-50%); /* Solo necesitamos mover la mitad para crear un loop perfecto */
     }
 }
+/* Pausar la animación al pasar el cursor */
+.carousel-track:hover {
+    animation-play-state: paused;
+}
+
+/* Personalización de la barra de desplazamiento */
+.carousel-container::-webkit-scrollbar {
+    height: 6px;
+}
+
+.carousel-container::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.carousel-container::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+}
+
+/* Tarjetas de producto con ajustes para el carrusel continuo */
+.product-card {
+    flex: 0 0 auto;
+    width: 140px;
+    margin: 0 10px;
+    display: flex;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+/* Contenedor de imagen con proporción fija */
+.image-container {
+    position: relative;
+    width: 100%;
+    padding-top: 90%; /* Proporción 1:1 */
+    overflow: hidden;
+}
+
+/* Imagen del producto */
+.product-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.05);
+}
+
+/* Título del producto */
+.product-title {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% - 16px);
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    font-size: 0.7rem;
+    padding: 4px 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    z-index: 1;
+}
+
+/* Precio del producto */
+.product-price {
+    padding: 8px;
+    font-weight: bold;
+    color: #4CAF50;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+/* Enlace al producto */
+.product-link {
+    display: block;
+    margin: 0 8px 8px;
+    padding: 6px 0;
+    background: linear-gradient(90deg, rgba(1, 112, 202, 0.8) 0%, rgba(1, 112, 202, 0.6) 100%);
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    transition: background 0.2s ease;
+}
+
+.product-link:hover {
+    background: linear-gradient(90deg, rgba(1, 112, 202, 1) 0%, rgba(1, 112, 202, 0.8) 100%);
+}
+
+/* Indicadores de control (opcional) */
+.carousel-controls {
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    z-index: 5;
+}
+
+.carousel-control {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.carousel-control:hover,
+.carousel-control.active {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+/* Mejoras para dispositivos móviles */
+@media (max-width: 768px) {
+    .carousel-container {
+        height: 190px; /* Ligeramente más pequeño en móvil */
+    }
+    
+    .product-card {
+        width: 120px;
+        margin: 0 8px;
+    }
+    
+    .product-link {
+        font-size: 0.7rem;
+        padding: 5px 0;
+    }
+}
+.product-link:hover {
+    background: linear-gradient(90deg, rgba(1, 112, 202, 1) 0%, rgba(1, 112, 202, 0.8) 100%);
+}
+
+/* Estilos responsivos para el carrusel */
+@media (max-width: 768px) {
+    .carousel-container {
+        margin-top: 10px;
+        width: 100%;
+    }
+    
+    .product-card {
+        width: 120px;
+        min-width: 120px;
+    }
+    
+    .product-link {
+        font-size: 0.7rem;
+        padding: 5px 0;
+    }
+    
+    /* Ajuste específico para el modo móvil de la tabla */
+    .tableResult td.options-cell {
+        display: block;
+        padding: 0.75rem !important;
+    }
+    
+    .tableResult td.options-cell::before {
+        content: attr(data-label);
+        display: block;
+        font-weight: 600;
+        margin-bottom: 10px;
+        text-align: left;
+    }
+}
+
 
 
 /* Spinner */
 .spinner {
-    margin: 100px auto 0;
+    margin: 50px auto 0;
     width: 70px;
     text-align: center;
     display: none; /* Inicialmente oculto */
