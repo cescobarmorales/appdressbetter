@@ -225,7 +225,7 @@ async function obtenerRecomendacionesVestimenta(estilo) {
         if (data && data.choices && data.choices[0].message) {
             const recomendaciones = JSON.parse(data.choices[0].message.content);
 
-            
+
 
             // Enriquecer recomendaciones con opciones de Mercado Libre
             for (const outfit of recomendaciones.outfits) {
@@ -240,7 +240,7 @@ async function obtenerRecomendacionesVestimenta(estilo) {
             // escribe las notas bajo el avatar
             introText.innerHTML = "";
             typeNotes(recomendaciones.notes);
-            
+
         } else {
             console.error("Error en la respuesta de OpenAI");
         }
@@ -295,58 +295,58 @@ function renderizarTablaRecomendaciones(outfits) {
         headerCell.style.fontWeight = 'bold';
         headerRow.appendChild(headerCell);
         tabla.appendChild(headerRow);
-        
+
         // Iterar sobre cada item del conjunto
         outfit.items.forEach(item => {
             const row = document.createElement('tr');
-            
+
             // Celda del item
             const itemCell = document.createElement('td');
             itemCell.textContent = item.item;
             itemCell.setAttribute('data-label', 'Item');
             row.appendChild(itemCell);
-            
+
             // Celda de descripción
             const descriptionCell = document.createElement('td');
             descriptionCell.textContent = item.description;
             descriptionCell.setAttribute('data-label', 'Descripción');
             row.appendChild(descriptionCell);
-            
+
             // Celda de color
             const colorCell = document.createElement('td');
             colorCell.textContent = item.color;
             colorCell.setAttribute('data-label', 'Color');
             row.appendChild(colorCell);
-            
+
             // Celda de talla
             const sizeCell = document.createElement('td');
             sizeCell.textContent = item.size;
             sizeCell.setAttribute('data-label', 'Talla');
             row.appendChild(sizeCell);
-            
+
             // Celda de opciones con carrusel
             const opcionesCell = document.createElement('td');
             opcionesCell.setAttribute('data-label', 'Opciones');
             opcionesCell.classList.add('options-cell');
-            
+
             // Crear un contenedor para el carrusel
             const carouselContainer = document.createElement('div');
             carouselContainer.classList.add('carousel-container');
-            
+
             // Crear el track del carrusel (cinta que se anima)
             const carouselTrack = document.createElement('div');
             carouselTrack.classList.add('carousel-track');
-            
+
             // Variable para guardar las tarjetas originales
             const originalCards = [];
-            
+
             // Agregar las opciones al carrusel
             item.opcionesML.forEach(opcion => {
                 const card = createProductCard(opcion);
                 originalCards.push(card);
                 carouselTrack.appendChild(card);
             });
-            
+
             // Duplicar las tarjetas para crear efecto continuo
             // Solo si hay suficientes elementos para justificar duplicarlos
             if (item.opcionesML.length > 1) {
@@ -354,15 +354,15 @@ function renderizarTablaRecomendaciones(outfits) {
                     const clonedCard = card.cloneNode(true);
                     carouselTrack.appendChild(clonedCard);
                 });
-                
+
                 // Ajustar la velocidad de la animación según la cantidad de tarjetas
                 const animationDuration = Math.max(15, item.opcionesML.length * 5); // mínimo 15s, escalando según cantidad
                 carouselTrack.style.animationDuration = `${animationDuration}s`;
             }
-            
+
             // Agregar el track al contenedor del carrusel
             carouselContainer.appendChild(carouselTrack);
-            
+
             // Opcional: Agregar controles de pausa/play
             const pausePlayBtn = document.createElement('button');
             pausePlayBtn.className = 'carousel-pause-play';
@@ -378,7 +378,7 @@ function renderizarTablaRecomendaciones(outfits) {
             pausePlayBtn.style.height = '24px';
             pausePlayBtn.style.cursor = 'pointer';
             pausePlayBtn.style.zIndex = '10';
-            
+
             let isPaused = false;
             pausePlayBtn.addEventListener('click', () => {
                 if (isPaused) {
@@ -391,61 +391,79 @@ function renderizarTablaRecomendaciones(outfits) {
                     isPaused = true;
                 }
             });
-            
+
             carouselContainer.appendChild(pausePlayBtn);
-            
+
             // Agregar el contenedor del carrusel a la celda
             opcionesCell.appendChild(carouselContainer);
-            
+
             // Agregar la celda a la fila
             row.appendChild(opcionesCell);
-            
+
             tabla.appendChild(row);
         });
     });
-    
+
     // Función para crear una tarjeta de producto
     function createProductCard(opcion) {
         const card = document.createElement('div');
         card.classList.add('product-card');
-        
+
         // Contenedor para la imagen (para mantener proporción)
         const imageContainer = document.createElement('div');
         imageContainer.classList.add('image-container');
-        
+
         // Imagen
         const image = document.createElement('img');
         image.src = opcion.image;
         image.alt = opcion.title;
         image.classList.add('product-image');
-        
+
         // Título del producto
         const title = document.createElement('div');
         title.textContent = opcion.title;
         title.classList.add('product-title');
-        
+
         // Precio
         const price = document.createElement('div');
-        price.textContent = `$${opcion.price}`;
+        // price.textContent = `$${opcion.price}`;
+
+        // Convertir a número asegurándonos de que no haya problemas con el formato
+        const numericPrice = parseFloat(opcion.price); // Usa parseFloat para convertir cadenas con o sin decimales
+
+        // Verificar si la conversión es válida
+        if (!isNaN(numericPrice)) {
+            // Aplicar formato de miles con soporte para números decimales
+            const formattedPrice = numericPrice.toLocaleString('es-ES', {
+                minimumFractionDigits: numericPrice % 1 === 0 ? 0 : 2, // Si tiene decimales, mostrar 2 dígitos
+                maximumFractionDigits: 2
+            });
+
+            price.textContent = `$${formattedPrice}`;
+        } else {
+            // Si el precio no es un número válido, mostrar un mensaje de error o dejarlo sin formato
+            console.warn(`El valor del precio no es un número válido: ${opcion.price}`);
+            price.textContent = `$${opcion.price}`;
+        }
         price.classList.add('product-price');
-        
+
         // Link al producto
         const link = document.createElement('a');
         link.href = opcion.link;
         link.textContent = 'Visitar tienda';
         link.target = '_blank';
         link.classList.add('product-link');
-        
+
         // Ensamblar los elementos dentro de la tarjeta
         imageContainer.appendChild(image);
         imageContainer.appendChild(title);
         card.appendChild(imageContainer);
         card.appendChild(price);
         card.appendChild(link);
-        
+
         return card;
     }
-    
+
 
     // Mostrar el contenedor después de completar la tabla
     document.getElementById('response-container').style.display = 'block';
